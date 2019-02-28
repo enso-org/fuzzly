@@ -1,0 +1,19 @@
+{
+  "name": "fuzzly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec --require coffeescript/register test/**/*.coffee",
+    "main": "coffee index.coffee",
+    "bench": "coffee bench/bench.coffee"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "benchmark": "^2.1.4",
+    "chai": "^4.2.0",
+    "coffeescript": "^2.3.2",
+    "mocha": "^6.0.2"
+  }
+}
