@@ -1,4 +1,4 @@
-SGG = require './lib/SubsequenceGraphGenerator.coffee'
+DB = require('./lib/Database.coffee')
 
-new SGG("fooof", "oof").run()
-console.log(new SGG("Ffoobarbarfooo", "Foorfoo").run())
+module.exports =
+    Database: DB

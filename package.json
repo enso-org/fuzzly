@@ -2,10 +2,10 @@
   "name": "fuzzly",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.coffee",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec --require coffeescript/register test/**/*.coffee",
-    "main": "coffee index.coffee",
+    "main": "coffee main.coffee",
     "bench": "coffee bench/bench.coffee"
   },
   "author": "",
