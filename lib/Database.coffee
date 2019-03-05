@@ -1,6 +1,6 @@
 NaiveMatchFinder = require('./NaiveMatchFinder.coffee')
 Scorer = require('./Scorer.coffee')
-Metric = require('./Metrics.coffee').DefaultMetric
+defaultMetric = require('./Metrics.coffee').defaultMetric
 
 class Database
     constructor: (items = []) ->
@@ -10,13 +10,21 @@ class Database
             @data[word] ?= []
             @data[word].push(idx)
 
-    query: (q, metric = new Metric()) ->
+    query: (q, metric = defaultMetric) ->
         results = []
         for word, ixes of @data
             if new NaiveMatchFinder(word, q).run()
                 result = new Scorer(word, q, metric).run()
                 results.push({ixes: ixes, score: result.score, match: result.match})
-        results.sort((a, b) -> if a.score < b.score then 1 else -1)
+        @normalizeScores(results)
         results.map((a) -> [a.ixes, a.match, a.score])
+
+    normalizeScores: (scored) ->
+        maxScore = 0
+        for item in scored
+            maxScore = Math.max(maxScore, item.score)
+        maxScore = 1 if maxScore == 0
+        for item in scored
+            item.score /= maxScore
 
 module.exports = Database
