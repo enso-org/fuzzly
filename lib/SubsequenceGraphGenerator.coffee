@@ -1,3 +1,5 @@
+Text = require('./TextUtils.coffee')
+
 class Int32Array2D
     constructor: (@rows, @columns) ->
         @data = new Int32Array(@rows * @columns)
@@ -25,7 +27,7 @@ class SubsequenceGraphGenerator
 
     run: ->
         @data = new Int32Array2D(@query.length, @word.length)
-        eq = (i, j) => @word[i].toLowerCase() == @query[j].toLowerCase()
+        eq = (i, j) => Text.equalUpToCase(@word[i], @query[j])
         for i in [0...@query.length] by 1
             @data.set(i, 0, if eq(0, i) then 1 else 0)
         for i in [1...@word.length] by 1
@@ -41,7 +43,7 @@ class SubsequenceGraphGenerator
         for i in [@query.length - 1 .. 0] by -1
             candidatesThisRow = []
             for j in [lastCandidatePosition - 1 .. 0] by -1
-                isValid = @data.get(i, j) == i + 1 && @query[i].toLowerCase() == @word[j].toLowerCase()
+                isValid = @data.get(i, j) == i + 1 && eq(j, i)
                 if isValid
                     candidatesThisRow.push(j)
             lastCandidatePosition = candidatesThisRow[0]

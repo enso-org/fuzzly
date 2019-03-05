@@ -1,5 +1,5 @@
 SGG = require("./SubsequenceGraphGenerator.coffee")
-SF = require("./SubsequenceFinder.coffee")
+SF  = require("./SubsequenceFinder.coffee")
 
 class Scorer
     constructor: (word, query, @metric) ->
@@ -7,7 +7,7 @@ class Scorer
         @query = Array.from(query)
 
     run: ->
-        g = new SGG(@word, @query).run()
-        new SF(@word, @query, g, @metric).run()
+        graph = new SGG(@word, @query).run()
+        new SF(@word, @query, graph, @metric).run()
 
 module.exports = Scorer

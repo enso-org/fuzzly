@@ -1,4 +1,4 @@
-isAlpha = (a) ->
+hasCase = (a) ->
     a.toLowerCase() != a.toUpperCase()
 
 isUpper = (a) ->
@@ -7,7 +7,11 @@ isUpper = (a) ->
 isLower = (a) ->
     a == a.toLowerCase()
 
+equalUpToCase = (a,b) ->
+    a.toLowerCase() == b.toLowerCase()
+
 module.exports =
-    isAlpha: isAlpha
+    hasCase: hasCase
     isUpper: isUpper
     isLower: isLower
+    equalUpToCase: equalUpToCase

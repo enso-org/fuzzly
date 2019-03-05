@@ -3,8 +3,12 @@ class SubsequenceFinder
 
     run: =>
         scoredLayers = []
-        lastScoredLayer = ({ node: i, score: @metric.measureBeginning(i, @word, @query) } for i in @graph[0])
+
+        lastScoredLayer = @graph[0].map (i) =>
+            node: i
+            score: @metric.measureBeginning(i, @word, @query)
         scoredLayers.push(lastScoredLayer)
+
         for i in [1...@graph.length] by 1
             currentLayer = @graph[i]
             currentScoredLayer = []
@@ -13,11 +17,16 @@ class SubsequenceFinder
                 bestPred  = -1
                 for pred, idx in lastScoredLayer
                     break if pred.node >= node
-                    score = pred.score + @metric.measure(i, pred.node, node, @word, @query)
+                    score =  pred.score
+                    score += @metric.measure(i, pred.node, node, @word, @query)
                     if score > bestScore
                         bestScore = score
                         bestPred = idx
-                currentScoredLayer.push({ node: node, score: bestScore, pred: bestPred })
+                currentScoredLayer.push(
+                    node: node
+                    score: bestScore
+                    pred: bestPred
+                )
             scoredLayers.push(currentScoredLayer)
             lastScoredLayer = currentScoredLayer
             currentScoredLayer = []

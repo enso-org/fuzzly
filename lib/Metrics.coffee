@@ -27,10 +27,9 @@ class CaseMatchBonus
 
 class SumMetric
     constructor: (@metrics...) ->
-        console.log(@metrics)
 
-    delegateToMetrics: (methodName, args) ->
-        r = @metrics.reduce(((total, metric) -> metric[methodName](args...) + total), 0)
+    delegateToMetrics: (method, args) ->
+        r = @metrics.reduce(((s, m) -> m[method](args...) + s), 0)
 
     measureBeginning: (args...) -> @delegateToMetrics("measureBeginning", args)
     measure:          (args...) -> @delegateToMetrics("measure", args)
@@ -42,4 +41,5 @@ defaultMetric = new SumMetric(new SubsequentLettersBonus, new CaseMatchBonus)
 module.exports =
     SubsequentLettersBonus: SubsequentLettersBonus
     CaseMatchBonus: CaseMatchBonus
+    SumMetric: SumMetric
     defaultMetric: defaultMetric
